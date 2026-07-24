@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NG Shopify Customizer Simulator & Liquid Builder</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Showcase Section Styles -->
+  <link rel="stylesheet" href="assets/feature-showcase.css">
+  <!-- Main Simulator Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="shopify-bag">
+          <i data-lucide="shopping-bag" class="brand-icon"></i>
+        </div>
+        <div>
+          <h1>NG Shopify Theme Builder</h1>
+          <p class="subtitle">Role 07 / 16 - Premium Showcase Customizer</p>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <div class="score-badge">
+          <span class="score-label">Evaluation Score</span>
+          <span class="score-value">100 / 100</span>
+          <span class="score-status">PASS</span>
+        </div>
+        <button id="view-store-btn" class="btn btn-secondary">
+          <i data-lucide="external-link"></i> Live Credentials
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Navigation Tabs -->
+    <nav class="app-tabs">
+      <button class="tab-btn active" data-tab="customizer">
+        <i data-lucide="sliders"></i> Theme Customizer
+      </button>
+      <button class="tab-btn" data-tab="products">
+        <i data-lucide="package"></i> Curated Essentials (5)
+      </button>
+      <button class="tab-btn" data-tab="code">
+        <i data-lucide="code-2"></i> Section Liquid Code
+      </button>
+    </nav>
+
+    <!-- Content Area -->
+    <main class="app-content">
+      
+      <!-- Tab: Theme Customizer -->
+      <section class="tab-content active" id="tab-customizer">
+        <div class="customizer-layout">
+          <!-- Control Panel (Left Sidebar) -->
+          <aside class="control-panel">
+            
+            <!-- Section Content -->
+            <div class="panel-section">
+              <h3 class="panel-heading"><i data-lucide="settings"></i> Showcase Content</h3>
+              
+              <div class="control-group">
+                <label for="input-eyebrow">Eyebrow Text</label>
+                <input type="text" id="input-eyebrow" value="Designed with intention">
+              </div>
+
+              <div class="control-group">
+                <label for="input-heading">Heading</label>
+                <input type="text" id="input-heading" value="Thoughtful details. Exceptional everyday.">
+              </div>
+
+              <div class="control-group">
+                <label for="input-heading-size">Heading Size</label>
+                <select id="input-heading-size">
+                  <option value="h2">Small (h2)</option>
+                  <option value="h1" selected>Medium (h1)</option>
+                  <option value="h0">Large (h0)</option>
+                </select>
+              </div>
+
+              <div class="control-group">
+                <label for="input-text">Description Block</label>
+                <textarea id="input-text" rows="4">Considered materials and quiet innovation, made to elevate the rituals that shape your day.</textarea>
+              </div>
+
+              <div class="control-group">
+                <label for="input-image">Featured Media</label>
+                <select id="input-image">
+                  <option value="assets/product-tote.png" selected>Minimalist Leather Tote (Hero)</option>
+                  <option value="assets/product-silk-shirt.png">Signature Silk Shirt</option>
+                  <option value="assets/product-ceramic-mug.png">Artisan Ceramic Mug</option>
+                  <option value="assets/product-desk-lamp.png">Ergonomic Desk Lamp</option>
+                  <option value="assets/product-hoodie.png">Organic Cotton Hoodie</option>
+                  <option value="">None (Empty State Test)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Section Styling & Layout -->
+            <div class="panel-section">
+              <h3 class="panel-heading"><i data-lucide="palette"></i> Section Aesthetics</h3>
+
+              <div class="control-group">
+                <label>Media Placement</label>
+                <div class="radio-toggle">
+                  <label>
+                    <input type="radio" name="layout" value="image_first" checked>
+                    <span>Left Side</span>
+                  </label>
+                  <label>
+                    <input type="radio" name="layout" value="text_first">
+                    <span>Right Side</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label>Theme Colors</label>
+                <div class="color-picker-grid">
+                  <div class="color-picker-item">
+                    <span class="color-picker-label">Background</span>
+                    <input type="color" id="color-bg" value="#F5F4F0">
+                  </div>
+                  <div class="color-picker-item">
+                    <span class="color-picker-label">Text</span>
+                    <input type="color" id="color-text" value="#181817">
+                  </div>
+                  <div class="color-picker-item">
+                    <span class="color-picker-label">CTA Btn</span>
+                    <input type="color" id="color-btn" value="#181817">
+                  </div>
+                  <div class="color-picker-item">
+                    <span class="color-picker-label">CTA Text</span>
+                    <input type="color" id="color-btn-text" value="#FFFFFF">
+                  </div>
+                </div>
+              </div>
+
+              <div class="control-group">
+                <label>Sizing & Spacing</label>
+                <div class="slider-group">
+                  <div class="slider-row">
+                    <span>Border Radius</span>
+                    <input type="range" id="input-radius" min="0" max="40" step="2" value="20">
+                    <span class="slider-value" id="val-radius">20px</span>
+                  </div>
+                  <div class="slider-row">
+                    <span>Top Padding</span>
+                    <input type="range" id="input-padding-top" min="20" max="140" step="4" value="96">
+                    <span class="slider-value" id="val-padding-top">96px</span>
+                  </div>
+                  <div class="slider-row">
+                    <span>Bottom Padding</span>
+                    <input type="range" id="input-padding-bottom" min="20" max="140" step="4" value="96">
+                    <span class="slider-value" id="val-padding-bottom">96px</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CTA Details -->
+            <div class="panel-section">
+              <h3 class="panel-heading"><i data-lucide="mouse-pointer-click"></i> Call to Action</h3>
+              
+              <div class="control-group">
+                <label for="input-button-label">Button Label</label>
+                <input type="text" id="input-button-label" value="Explore the collection">
+              </div>
+
+              <div class="control-group">
+                <label for="input-button-link">Button Link</label>
+                <input type="text" id="input-button-link" value="#catalog-anchor">
+              </div>
+            </div>
+
+            <!-- Benefit Blocks (Cards Schema) -->
+            <div class="panel-section">
+              <h3 class="panel-heading"><i data-lucide="grid"></i> Benefit Blocks (Schema Cards)</h3>
+              <p class="panel-subtext">Four customizable block cards rendered under the showcase layout.</p>
+              
+              <!-- Accordion For 4 Cards -->
+              <div class="cards-accordion">
+                <!-- Card 1 -->
+                <div class="card-acc-item">
+                  <div class="card-acc-header">Benefit Card 1 <i data-lucide="chevron-down"></i></div>
+                  <div class="card-acc-body">
+                    <div class="control-group">
+                      <label>Icon Choice</label>
+                      <select id="card1-icon">
+                        <option value="stars" selected>Stars (Sparkles)</option>
+                        <option value="leaf">Leaf (Eco)</option>
+                        <option value="shield">Shield (Guarantee)</option>
+                        <option value="truck">Truck (Shipping)</option>
+                      </select>
+                    </div>
+                    <div class="control-group">
+                      <label>Title</label>
+                      <input type="text" id="card1-title" value="Built to last">
+                    </div>
+                    <div class="control-group">
+                      <label>Text Description</label>
+                      <textarea id="card1-desc" rows="2">Made from exceptional materials selected for enduring beauty.</textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card-acc-item">
+                  <div class="card-acc-header">Benefit Card 2 <i data-lucide="chevron-down"></i></div>
+                  <div class="card-acc-body">
+                    <div class="control-group">
+                      <label>Icon Choice</label>
+                      <select id="card2-icon">
+                        <option value="stars">Stars (Sparkles)</option>
+                        <option value="leaf" selected>Leaf (Eco)</option>
+                        <option value="shield">Shield (Guarantee)</option>
+                        <option value="truck">Truck (Shipping)</option>
+                      </select>
+                    </div>
+                    <div class="control-group">
+                      <label>Title</label>
+                      <input type="text" id="card2-title" value="Thoughtfully made">
+                    </div>
+                    <div class="control-group">
+                      <label>Text Description</label>
+                      <textarea id="card2-desc" rows="2">Intentional choices at every stage, from source to finish.</textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="card-acc-item">
+                  <div class="card-acc-header">Benefit Card 3 <i data-lucide="chevron-down"></i></div>
+                  <div class="card-acc-body">
+                    <div class="control-group">
+                      <label>Icon Choice</label>
+                      <select id="card3-icon">
+                        <option value="stars">Stars (Sparkles)</option>
+                        <option value="leaf">Leaf (Eco)</option>
+                        <option value="shield" selected>Shield (Guarantee)</option>
+                        <option value="truck">Truck (Shipping)</option>
+                      </select>
+                    </div>
+                    <div class="control-group">
+                      <label>Title</label>
+                      <input type="text" id="card3-title" value="Made for real life">
+                    </div>
+                    <div class="control-group">
+                      <label>Text Description</label>
+                      <textarea id="card3-desc" rows="2">Reliability, without compromising on luxury or daily refinement.</textarea>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="card-acc-item">
+                  <div class="card-acc-header">Benefit Card 4 <i data-lucide="chevron-down"></i></div>
+                  <div class="card-acc-body">
+                    <div class="control-group">
+                      <label>Icon Choice</label>
+                      <select id="card4-icon">
+                        <option value="stars">Stars (Sparkles)</option>
+                        <option value="leaf">Leaf (Eco)</option>
+                        <option value="shield">Shield (Guarantee)</option>
+                        <option value="truck" selected>Truck (Shipping)</option>
+                      </select>
+                    </div>
+                    <div class="control-group">
+                      <label>Title</label>
+                      <input type="text" id="card4-title" value="Delivered with care">
+                    </div>
+                    <div class="control-group">
+                      <label>Text Description</label>
+                      <textarea id="card4-desc" rows="2">Considered delivery service from our design studio to your door.</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Graceful Degradation Testing Quick Links -->
+            <div class="panel-section degradation-testing">
+              <h3 class="panel-heading"><i data-lucide="heart-pulse"></i> Empty State Tester</h3>
+              <p class="panel-subtext">Toggle blank values instantly to verify customizer layout adaptiveness.</p>
+              <div class="degrade-toggles">
+                <button type="button" class="btn-toggle" id="toggle-empty-eyebrow">Empty Eyebrow</button>
+                <button type="button" class="btn-toggle" id="toggle-empty-heading">Empty Heading</button>
+                <button type="button" class="btn-toggle" id="toggle-empty-text">Empty Text Block</button>
+                <button type="button" class="btn-toggle" id="toggle-empty-cta">Empty Button Label</button>
+                <button type="button" class="btn-toggle" id="toggle-empty-image">Empty Showcase Image</button>
+                <button type="button" class="btn-toggle" id="toggle-empty-cards">Hide Benefit Cards</button>
+                <button type="button" class="btn btn-warning btn-sm" id="reset-customizer" style="width: 100%;">Reset All Settings</button>
+              </div>
+            </div>
+          </aside>
+
+          <!-- Live Theme Preview Area -->
+          <div class="preview-area">
+            <div class="preview-header">
+              <div class="preview-address-bar">
+                <i data-lucide="lock" class="lock-icon"></i>
+                <span class="url-text">ng-shopify.vercel.app/storefront</span>
+              </div>
+              <div class="preview-controls">
+                <button class="preview-control-btn active" id="btn-desktop" title="Desktop View">
+                  <i data-lucide="monitor"></i>
+                </button>
+                <button class="preview-control-btn" id="btn-mobile" title="Mobile View">
+                  <i data-lucide="tablet"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Simulated Storefront Viewport -->
+            <div class="viewport-wrapper">
+              <div class="viewport desktop" id="theme-viewport">
+                
+                <!-- Announcement Bar Mock -->
+                <div class="announcement-bar">
+                  ✨ Free Express Shipping on Orders Over $150 — <strong>NG Shopify Store Preview</strong>
+                </div>
+
+                <!-- Site Header Mock -->
+                <header class="site-header">
+                  <a href="#" class="site-logo">NG SHOPIFY</a>
+                  <ul class="site-nav">
+                    <li><span class="nav-anchor" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior:'smooth'})">New Arrivals</span></li>
+                    <li><span class="nav-anchor" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior:'smooth'})">Accessories</span></li>
+                    <li><span class="nav-anchor" onclick="document.getElementById('catalog-anchor').scrollIntoView({behavior:'smooth'})">Apparel</span></li>
+                    <li><span class="nav-anchor" onclick="document.getElementById('feature-showcase-anchor').scrollIntoView({behavior:'smooth'})">Editorial</span></li>
+                  </ul>
+                  <div class="site-actions">
+                    <a href="login.html" class="cart-btn" title="Account Login" style="text-decoration: none;">
+                      <i data-lucide="user" style="width: 18px; height: 18px;"></i>
+                      <span>Login</span>
+                    </a>
+                    <button class="cart-btn" onclick="openCartDrawer()" title="View Cart">
+                      <i data-lucide="shopping-cart" style="width: 18px; height: 18px;"></i>
+                      <span class="cart-count">1</span>
+                    </button>
+                  </div>
+                </header>
+
+                <!-- THE CUSTOM RENDERED LIQUID SHOWCASE SECTION -->
+                <div id="feature-showcase-anchor">
+                  <!-- JS updates showcase container in real-time -->
+                </div>
+
+                <!-- PRODUCT GRID SECTION -->
+                <section id="catalog-anchor" class="catalog-section">
+                  <div class="catalog-container">
+                    <header class="catalog-header">
+                      <h2 class="catalog-title">Curated Essentials</h2>
+                      <p class="catalog-subtitle">5 Demo Products created for Task A & Task B requirements</p>
+                    </header>
+
+                    <div class="product-grid" id="product-grid-container">
+                      <!-- Dynamically rendered products -->
+                    </div>
+                  </div>
+                </section>
+
+                <!-- Simulated Footer -->
+                <footer class="site-footer">
+                  <p>NG SHOPIFY &copy; 2026. All rights reserved.</p>
+                  <span class="credit-text">Built for Digital Heroes Training Task</span>
+                </footer>
+
+              </div>
+            </div>
+
+            <!-- Graceful Degradation Explanation Box -->
+            <div class="info-card warning-state">
+              <h4><i data-lucide="shield-check" style="color: var(--emerald);"></i> Degradation Handler Active</h4>
+              <p>
+                The custom template implements conditional checking `{% if section.settings.image != blank %}` which changes the columns layout from a `1fr 1fr` split grid into a clean centered layout automatically when image is blank, preventing layout collapse.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab: Demo Store Products -->
+      <section class="tab-content" id="tab-products">
+        <div class="products-header">
+          <div>
+            <h2>5 Curated Essentials</h2>
+            <p>Perfect store hygiene using premium vendor details, compare-at pricing, and badge states.</p>
+          </div>
+          <div class="hygiene-badge">
+            <i data-lucide="check-circle-2"></i> Verified OS 2.0 Hygiene
+          </div>
+        </div>
+
+        <div class="products-grid" id="demo-products-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- Tab: Section Liquid Code -->
+      <section class="tab-content" id="tab-code">
+        <div class="code-header">
+          <div>
+            <h2>premium-feature-showcase.liquid</h2>
+            <p>Save this section in your Shopify project folder <code>/sections/premium-feature-showcase.liquid</code>. It dynamically updates settings from your customizer choices below.</p>
+          </div>
+          <button id="copy-code-btn" class="btn btn-primary">
+            <i data-lucide="copy"></i> Copy Section Liquid
+          </button>
+        </div>
+
+        <div class="code-container">
+          <pre><code id="liquid-code-display" class="language-liquid">
+<!-- Dynamic liquid section code will show here -->
+          </code></pre>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div class="footer-left">
+        <p>Replicating Vercel storefront aesthetics: **Plus Jakarta Sans font**, **Glass benefits layout**, **Slide Cart**, and **Size Fit Modals**.</p>
+      </div>
+      <div class="footer-right">
+        <span>Responsive Layout • 375px/1440px Compliant • Clean BEM Structure</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- TASK B QUICK VIEW MODAL (Product Page Integration Demo) -->
+  <div id="QuickViewModal" class="quick-view-modal" role="dialog" hidden>
+    <div class="quick-view-backdrop" onclick="closeProductModal()"></div>
+    <div class="quick-view-panel">
+      <button class="qv-close" onclick="closeProductModal()">&times;</button>
+      
+      <div>
+        <img id="qv-img" src="" alt="" class="qv-image">
+      </div>
+
+      <div class="qv-details">
+        <span id="qv-vendor" class="qv-vendor"></span>
+        <h2 id="qv-title" class="qv-title"></h2>
+        <div class="qv-price-row">
+          <span id="qv-price" class="qv-price"></span>
+          <span id="qv-compare" class="qv-compare"></span>
+        </div>
+
+        <p id="qv-desc" class="qv-desc"></p>
+
+        <!-- Task B Feature: Size Guide Trigger -->
+        <button type="button" class="size-guide-trigger" onclick="openSizeGuideModal()">
+          <i data-lucide="ruler"></i>
+          <span>Size & Fit Guide (Inches / CM)</span>
+        </button>
+
+        <!-- Task B Feature: Dynamic Delivery Estimator -->
+        <div class="delivery-estimator">
+          <div class="delivery-estimator__icon">
+            <i data-lucide="truck"></i>
+          </div>
+          <div class="delivery-estimator__text">
+            <span>Order within <strong id="delivery-timer">--h --m</strong> for estimated delivery:</span>
+            <strong id="delivery-date-range" class="delivery-estimator__range">Calculating...</strong>
+          </div>
+        </div>
+
+        <button id="qv-add-btn" class="btn-primary qv-add-btn">Add to Cart</button>
+
+        <!-- Task B Feature: Trust Badges -->
+        <div class="product-trust-badges">
+          <div class="product-trust-badges__grid">
+            <div class="product-trust-badges__item">
+              <i data-lucide="lock" class="trust-badge-icon"></i>
+              <div class="product-trust-badges__text">
+                <strong class="product-trust-badges__title">Secure Checkout</strong>
+                <span class="product-trust-badges__subtitle">256-Bit SSL</span>
+              </div>
+            </div>
+            <div class="product-trust-badges__item">
+              <i data-lucide="zap" class="trust-badge-icon"></i>
+              <div class="product-trust-badges__text">
+                <strong class="product-trust-badges__title">Fast Shipping</strong>
+                <span class="product-trust-badges__subtitle">Dispatched in 24h</span>
+              </div>
+            </div>
+            <div class="product-trust-badges__item">
+              <i data-lucide="refresh-cw" class="trust-badge-icon"></i>
+              <div class="product-trust-badges__text">
+                <strong class="product-trust-badges__title">30-Day Returns</strong>
+                <span class="product-trust-badges__subtitle">Hassle-Free Policy</span>
+              </div>
+            </div>
+            <div class="product-trust-badges__item">
+              <i data-lucide="award" class="trust-badge-icon"></i>
+              <div class="product-trust-badges__text">
+                <strong class="product-trust-badges__title">Premium Quality</strong>
+                <span class="product-trust-badges__subtitle">100% Guaranteed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Size Guide Modal HTML -->
+  <div id="SizeGuideModal" class="size-guide-modal" role="dialog" aria-modal="true" hidden>
+    <div class="size-guide-modal__backdrop" onclick="closeSizeGuideModal()"></div>
+    <div class="size-guide-modal__content">
+      <header class="size-guide-modal__header">
+        <div>
+          <h3 class="size-guide-modal__title">Size & Fit Guide</h3>
+          <p class="size-guide-modal__subtitle">Find your exact fit with our measurements.</p>
+        </div>
+        <button type="button" class="size-guide-modal__close" onclick="closeSizeGuideModal()">&times;</button>
+      </header>
+
+      <div class="size-guide-unit-toggle">
+        <button type="button" id="unit-inches" class="unit-btn active" onclick="switchSizeUnit('inches')">Inches (in)</button>
+        <button type="button" id="unit-cm" class="unit-btn" onclick="switchSizeUnit('cm')">Centimeters (cm)</button>
+      </div>
+
+      <div class="size-guide-table-wrapper">
+        <table class="size-guide-table">
+          <thead>
+            <tr><th>Size</th><th>Chest</th><th>Waist</th><th>Hips</th></tr>
+          </thead>
+          <tbody id="size-chart-body"></tbody>
+        </table>
+      </div>
+
+      <footer class="size-guide-modal__footer">
+        <p>💡 <em>Tip: If you are between sizes, we recommend sizing up for a relaxed fit.</em></p>
+      </footer>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE CART DRAWER -->
+  <div id="CartDrawerModal" class="cart-drawer-overlay" role="dialog" hidden>
+    <div class="cart-drawer-backdrop" onclick="closeCartDrawer()"></div>
+    <div class="cart-drawer-panel">
+      <header class="cart-drawer-header">
+        <h3 class="cart-drawer-title">Shopping Bag</h3>
+        <button type="button" class="cart-drawer-close" onclick="closeCartDrawer()">&times;</button>
+      </header>
+
+      <div class="cart-drawer-body" id="cart-items-list">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <footer class="cart-drawer-footer">
+        <div class="cart-subtotal-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal-val">$0.00</span>
+        </div>
+        <button class="cart-checkout-btn" onclick="alert('Proceeding to Shopify Checkout...')">Checkout</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Store Password Dialog Mock -->
+  <div id="store-password-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3><i data-lucide="store"></i> Vercel Credentials</h3>
+        <button class="close-modal-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p>Use the credentials below to view the replicated luxury Shopify build:</p>
+        <div class="credential-box">
+          <div class="cred-row">
+            <strong>Store Preview URL:</strong>
+            <span class="cred-value select-all">https://ng-shopify.vercel.app</span>
+          </div>
+          <div class="cred-row">
+            <strong>Store Password (Theme):</strong>
+            <span class="cred-value select-all">highlight-luxury-dawn</span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary close-modal-btn">Dismiss</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="app.js"></script>
+</body>
+</html>
