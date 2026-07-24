@@ -1,7 +1,37 @@
-// 5 Demo Products Data
+// 8 Demo Products Data
 const PRODUCTS = [
   {
     id: 0,
+    title: "Lumen Glass Candle",
+    vendor: "Digital Heroes",
+    price: "$38.00",
+    compare: "$48.00",
+    badge: "New Arrival",
+    image: "assets/lumen_glass_candle.png",
+    desc: "Hand-poured coconut wax candle in a smoked glass vessel. Scented with notes of amber, wild cedar, and sweet tobacco."
+  },
+  {
+    id: 1,
+    title: "Ceramic Oil Diffuser",
+    vendor: "Digital Heroes",
+    price: "$65.00",
+    compare: "",
+    badge: "Trending",
+    image: "assets/ceramic_oil_diffuser.png",
+    desc: "A minimal ceramic ultrasonic diffuser that doubles as a piece of sculpture. Humidifies and scents your space quietly."
+  },
+  {
+    id: 2,
+    title: "Scandi Ceramic Vase",
+    vendor: "Digital Heroes",
+    price: "$58.00",
+    compare: "$70.00",
+    badge: "Sale",
+    image: "assets/scandi_ceramic_vase.png",
+    desc: "Stoneware vase with a textured sand glaze and architectural double handle design. Beautiful with or without dried flowers."
+  },
+  {
+    id: 3,
     title: "Minimalist Leather Tote",
     vendor: "Digital Heroes",
     price: "$189.00",
@@ -11,7 +41,7 @@ const PRODUCTS = [
     desc: "Crafted from full-grain Italian leather with a structured silhouette, double handles, and an interior zippered privacy pocket."
   },
   {
-    id: 1,
+    id: 4,
     title: "Signature Silk Shirt",
     vendor: "Digital Heroes",
     price: "$145.00",
@@ -21,7 +51,7 @@ const PRODUCTS = [
     desc: "100% Mulberry silk blouse featuring genuine mother-of-pearl buttons and a tailored relaxed silhouette."
   },
   {
-    id: 2,
+    id: 5,
     title: "Artisan Ceramic Mug",
     vendor: "Digital Heroes",
     price: "$34.00",
@@ -31,7 +61,7 @@ const PRODUCTS = [
     desc: "Hand-thrown stoneware mug with a tactile matte glaze and comfortable ergonomic handle designed for daily coffee rituals."
   },
   {
-    id: 3,
+    id: 6,
     title: "Ergonomic Minimalist Desk Lamp",
     vendor: "Digital Heroes",
     price: "$120.00",
@@ -41,7 +71,7 @@ const PRODUCTS = [
     desc: "Architectural aluminum LED desk lamp featuring touch slider dimming and color temperature tuning."
   },
   {
-    id: 4,
+    id: 7,
     title: "Organic Cotton Luxury Hoodie",
     vendor: "Digital Heroes",
     price: "$98.00",
