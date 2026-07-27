@@ -1,84 +1,54 @@
-// 8 Demo Products Data
+// 5 Demo Products Data (Cropped from user collage)
 const PRODUCTS = [
   {
     id: 0,
-    title: "Lumen Glass Candle",
-    vendor: "Digital Heroes",
-    price: "$38.00",
-    compare: "$48.00",
-    badge: "New Arrival",
-    image: "assets/lumen_glass_candle.png",
-    desc: "Hand-poured coconut wax candle in a smoked glass vessel. Scented with notes of amber, wild cedar, and sweet tobacco."
+    title: "Pure Face Serum",
+    vendor: "Pure Organics",
+    price: "$45.00",
+    compare: "$60.00",
+    badge: "Best Seller",
+    image: "assets/pure_face_serum.png",
+    desc: "Advanced face serum formulated with pure Vitamin C and organic botanical extracts to restore natural radiance, reduce fine lines, and deeply hydrate skin."
   },
   {
     id: 1,
-    title: "Ceramic Oil Diffuser",
-    vendor: "Digital Heroes",
-    price: "$65.00",
-    compare: "",
+    title: "The Five Minute Journal",
+    vendor: "Intelligent Change",
+    price: "$29.00",
+    compare: "$35.00",
     badge: "Trending",
-    image: "assets/ceramic_oil_diffuser.png",
-    desc: "A minimal ceramic ultrasonic diffuser that doubles as a piece of sculpture. Humidifies and scents your space quietly."
+    image: "assets/five_minute_journal.png",
+    desc: "The original Five Minute Journal designed to cultivate daily gratitude, improve focus, and reduce stress in just minutes a day."
   },
   {
     id: 2,
-    title: "Scandi Ceramic Vase",
-    vendor: "Digital Heroes",
-    price: "$58.00",
-    compare: "$70.00",
-    badge: "Sale",
-    image: "assets/scandi_ceramic_vase.png",
-    desc: "Stoneware vase with a textured sand glaze and architectural double handle design. Beautiful with or without dried flowers."
+    title: "Rosefield Gold Watch",
+    vendor: "Rosefield",
+    price: "$129.00",
+    compare: "$159.00",
+    badge: "Elegant",
+    image: "assets/rosefield_watch.png",
+    desc: "Elegant Rosefield gold-toned watch featuring a minimalist white dial, quartz movement, and premium nude leather strap."
   },
   {
     id: 3,
-    title: "Minimalist Leather Tote",
-    vendor: "Digital Heroes",
-    price: "$189.00",
-    compare: "$220.00",
-    badge: "Best Seller",
-    image: "assets/product-tote.png",
-    desc: "Crafted from full-grain Italian leather with a structured silhouette, double handles, and an interior zippered privacy pocket."
+    title: "Canon EOS DSLR Camera",
+    vendor: "Canon",
+    price: "$599.00",
+    compare: "$699.00",
+    badge: "Sale",
+    image: "assets/canon_eos_camera.png",
+    desc: "Premium Canon EOS mirrorless digital camera bundle featuring a versatile zoom lens, high-resolution sensor, and wireless sharing capabilities."
   },
   {
     id: 4,
-    title: "Signature Silk Shirt",
-    vendor: "Digital Heroes",
-    price: "$145.00",
-    compare: "$175.00",
-    badge: "Silk",
-    image: "assets/product-silk-shirt.png",
-    desc: "100% Mulberry silk blouse featuring genuine mother-of-pearl buttons and a tailored relaxed silhouette."
-  },
-  {
-    id: 5,
-    title: "Artisan Ceramic Mug",
-    vendor: "Digital Heroes",
-    price: "$34.00",
-    compare: "",
+    title: "Sandalwood Scented Candle",
+    vendor: "Aroma Co.",
+    price: "$32.00",
+    compare: "$40.00",
     badge: "Handmade",
-    image: "assets/product-ceramic-mug.png",
-    desc: "Hand-thrown stoneware mug with a tactile matte glaze and comfortable ergonomic handle designed for daily coffee rituals."
-  },
-  {
-    id: 6,
-    title: "Ergonomic Minimalist Desk Lamp",
-    vendor: "Digital Heroes",
-    price: "$120.00",
-    compare: "$140.00",
-    badge: "New",
-    image: "assets/product-desk-lamp.png",
-    desc: "Architectural aluminum LED desk lamp featuring touch slider dimming and color temperature tuning."
-  },
-  {
-    id: 7,
-    title: "Organic Cotton Luxury Hoodie",
-    vendor: "Digital Heroes",
-    price: "$98.00",
-    compare: "",
-    badge: "Organic",
-    image: "assets/product-hoodie.png",
-    desc: "Heavyweight 450gsm organic French terry cotton hoodie with double-lined hood and invisible side seam pockets."
+    image: "assets/sandalwood_candle.png",
+    desc: "Hand-poured sandalwood scented candle made with natural soy wax and lead-free cotton wick. Promotes a calming and relaxing environment."
   }
 ];
 
@@ -90,10 +60,10 @@ let CART = [
 // Showcase Section Settings State
 const state = {
   eyebrow: "Designed with intention",
-  heading: "Thoughtful details.<br>Exceptional everyday.",
+  heading: "Sensory design.<br>Refined living.",
   headingSize: "h1",
-  text: "Considered materials and quiet innovation, made to elevate the rituals that shape your day.",
-  image: "assets/product-tote.png",
+  text: "A collection of thoughtful goods made to elevate the everyday rituals that shape your day.",
+  image: "assets/pure_face_serum.png",
   layout: "image_first",
   colorBg: "#F5F4F0",
   colorText: "#181817",
@@ -109,22 +79,22 @@ const state = {
   cards: [
     {
       icon: "stars",
-      title: "Built to last",
+      title: "Premium Craftsmanship",
       desc: "Made from exceptional materials selected for enduring beauty."
     },
     {
       icon: "leaf",
-      title: "Thoughtfully made",
-      desc: "Intentional choices at every stage, from source to finish."
+      title: "Organic & Sustainable",
+      desc: "100% natural ingredients, plant wax, and ethical manufacturing."
     },
     {
       icon: "shield",
-      title: "Made for real life",
-      desc: "Reliability, without compromising on luxury or daily refinement."
+      title: "Made for Real Life",
+      desc: "Durability, without compromising on luxury or daily refinement."
     },
     {
       icon: "truck",
-      title: "Delivered with care",
+      title: "Delivered with Care",
       desc: "Considered delivery service from our design studio to your door."
     }
   ],
@@ -1026,10 +996,10 @@ document.getElementById('toggle-empty-cards').addEventListener('click', function
 
 document.getElementById('reset-customizer').addEventListener('click', () => {
   state.eyebrow = "Designed with intention";
-  state.heading = "Thoughtful details.<br>Exceptional everyday.";
+  state.heading = "Sensory design.<br>Refined living.";
   state.headingSize = "h1";
-  state.text = "Considered materials and quiet innovation, made to elevate the rituals that shape your day.";
-  state.image = "assets/product-tote.png";
+  state.text = "A collection of thoughtful goods made to elevate the everyday rituals that shape your day.";
+  state.image = "assets/pure_face_serum.png";
   state.layout = "image_first";
   state.colorBg = "#F5F4F0";
   state.colorText = "#181817";
@@ -1049,10 +1019,10 @@ document.getElementById('reset-customizer').addEventListener('click', () => {
   state.emptyCards = false;
 
   state.cards = [
-    { icon: "stars", title: "Built to last", desc: "Made from exceptional materials selected for enduring beauty." },
-    { icon: "leaf", title: "Thoughtfully made", desc: "Intentional choices at every stage, from source to finish." },
-    { icon: "shield", title: "Made for real life", desc: "Reliability, without compromising on luxury or daily refinement." },
-    { icon: "truck", title: "Delivered with care", desc: "Considered delivery service from our design studio to your door." }
+    { icon: "stars", title: "Premium Craftsmanship", desc: "Made from exceptional materials selected for enduring beauty." },
+    { icon: "leaf", title: "Organic & Sustainable", desc: "100% natural ingredients, plant wax, and ethical manufacturing." },
+    { icon: "shield", title: "Made for Real Life", desc: "Durability, without compromising on luxury or daily refinement." },
+    { icon: "truck", title: "Delivered with Care", desc: "Considered delivery service from our design studio to your door." }
   ];
 
   document.querySelectorAll('.btn-toggle').forEach(btn => btn.classList.remove('active'));
