@@ -1,0 +1,627 @@
+{%- comment -%}
+  Custom Section: Product Size & Fit Guide Modal
+  Theme Compatibility: Dawn & OS 2.0 Themes
+  Location: sections/product-size-guide.liquid
+  
+  Adds an interactive Size Guide popup modal directly to the product details.
+  Supports dynamic unit conversion (Inches vs Centimeters) instantly using client-side JavaScript.
+{%- endcomment -%}
+
+{%- style -%}
+  .product-size-guide-{{ section.id }} {
+    margin: {{ section.settings.margin_top }}px 0 {{ section.settings.margin_bottom }}px 0;
+    text-align: {{ section.settings.alignment }};
+  }
+
+  .product-size-guide-{{ section.id }} .size-guide-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: {{ section.settings.trigger_color }};
+    font-size: {{ section.settings.trigger_font_size }}rem;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+    transition: color 0.2s ease;
+  }
+
+  .product-size-guide-{{ section.id }} .size-guide-trigger:hover {
+    color: {{ section.settings.trigger_hover_color }};
+  }
+
+  .product-size-guide-{{ section.id }} .size-guide-trigger svg {
+    width: 1.25em;
+    height: 1.25em;
+  }
+
+  /* Modal Wrapper */
+  .size-guide-modal-{{ section.id }} {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .size-guide-modal-{{ section.id }}.active {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__backdrop {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(15, 17, 21, {{ section.settings.backdrop_opacity }});
+    backdrop-filter: blur({{ section.settings.backdrop_blur }}px);
+    -webkit-backdrop-filter: blur({{ section.settings.backdrop_blur }}px);
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__content {
+    position: relative;
+    width: 100%;
+    max-width: {{ section.settings.modal_width }}px;
+    background-color: {{ section.settings.modal_bg_color }};
+    color: {{ section.settings.modal_text_color }};
+    border-radius: {{ section.settings.modal_border_radius }}px;
+    padding: 28px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+    transform: translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .size-guide-modal-{{ section.id }}.active .size-guide-modal__content {
+    transform: translateY(0);
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    padding-bottom: 16px;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__title {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: {{ section.settings.modal_text_color }};
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__subtitle {
+    margin: 4px 0 0;
+    font-size: 1.3rem;
+    opacity: 0.75;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__close {
+    background: none;
+    border: none;
+    font-size: 3rem;
+    cursor: pointer;
+    line-height: 1;
+    color: {{ section.settings.modal_text_color }};
+    opacity: 0.6;
+    padding: 0 4px;
+    transition: opacity 0.2s ease;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__close:hover {
+    opacity: 1;
+  }
+
+  /* Unit Toggle */
+  .size-guide-modal-{{ section.id }} .size-guide-unit-toggle {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 20px;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 4px;
+    border-radius: 8px;
+  }
+
+  .size-guide-modal-{{ section.id }} .unit-btn {
+    flex: 1;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: {{ section.settings.modal_text_color }};
+    opacity: 0.65;
+    font-family: inherit;
+    transition: all 0.2s ease;
+  }
+
+  .size-guide-modal-{{ section.id }} .unit-btn.active {
+    background-color: {{ section.settings.modal_bg_color }};
+    opacity: 1;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Measurement Table */
+  .size-guide-modal-{{ section.id }} .size-guide-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 10px;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.3rem;
+    text-align: left;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-table th,
+  .size-guide-modal-{{ section.id }} .size-guide-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-table th {
+    background-color: rgba(0, 0, 0, 0.02);
+    font-weight: 700;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-table tr:last-child td {
+    border-bottom: none;
+  }
+
+  .size-guide-modal-{{ section.id }} .size-guide-modal__footer {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    opacity: 0.8;
+  }
+{%- endstyle -%}
+
+<div class="product-size-guide-{{ section.id }}">
+  <button type="button" class="size-guide-trigger" aria-haspopup="dialog" onclick="openSizeGuideModal{{ section.id | replace: '-', '_' }}()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.4 2.4 0 0 1 0-3.4l2.6-2.6a2.4 2.4 0 0 1 3.4 0l12.6 12.6z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>
+    <span>{{ section.settings.trigger_text }}</span>
+  </button>
+</div>
+
+<!-- Modal Component -->
+<div id="SizeGuideModal-{{ section.id }}" class="size-guide-modal-{{ section.id }}" role="dialog" aria-modal="true" aria-labelledby="modal-title-{{ section.id }}" hidden>
+  <div class="size-guide-modal__backdrop" onclick="closeSizeGuideModal{{ section.id | replace: '-', '_' }}()"></div>
+  <div class="size-guide-modal__content">
+    <header class="size-guide-modal__header">
+      <div>
+        <h3 id="modal-title-{{ section.id }}" class="size-guide-modal__title">{{ section.settings.modal_title }}</h3>
+        {%- if section.settings.modal_subtitle != blank -%}
+          <p class="size-guide-modal__subtitle">{{ section.settings.modal_subtitle }}</p>
+        {%- endif -%}
+      </div>
+      <button type="button" class="size-guide-modal__close" aria-label="Close modal" onclick="closeSizeGuideModal{{ section.id | replace: '-', '_' }}()">&times;</button>
+    </header>
+
+    <div class="size-guide-unit-toggle">
+      <button type="button" id="unit-inches-{{ section.id }}" class="unit-btn active" onclick="switchSizeUnit{{ section.id | replace: '-', '_' }}('inches')">Inches (in)</button>
+      <button type="button" id="unit-cm-{{ section.id }}" class="unit-btn" onclick="switchSizeUnit{{ section.id | replace: '-', '_' }}('cm')">Centimeters (cm)</button>
+    </div>
+
+    <div class="size-guide-table-wrapper">
+      <table class="size-guide-table">
+        <thead>
+          <tr>
+            <th>Size</th>
+            <th>{{ section.settings.header_chest }}</th>
+            <th>{{ section.settings.header_waist }}</th>
+            <th>{{ section.settings.header_hips }}</th>
+          </tr>
+        </thead>
+        <tbody id="size-chart-body-{{ section.id }}">
+          {%- comment -%} JS will render values dynamically here based on JSON array {%- endcomment -%}
+        </tbody>
+      </table>
+    </div>
+
+    {%- if section.settings.modal_footer_tip != blank -%}
+      <footer class="size-guide-modal__footer">
+        <p>💡 <em>{{ section.settings.modal_footer_tip }}</em></p>
+      </footer>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  // Package sizing data dynamically into JSON from settings
+  const SIZE_DATA_{{ section.id | replace: '-', '_' }} = {
+    inches: [
+      {%- for block in section.blocks -%}
+        {
+          size: {{ block.settings.title | json }},
+          chest: {{ block.settings.chest_in | json }},
+          waist: {{ block.settings.waist_in | json }},
+          hips: {{ block.settings.hips_in | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ],
+    cm: [
+      {%- for block in section.blocks -%}
+        {
+          size: {{ block.settings.title | json }},
+          chest: {{ block.settings.chest_cm | json }},
+          waist: {{ block.settings.waist_cm | json }},
+          hips: {{ block.settings.hips_cm | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  };
+
+  function renderSizeTable_{{ section.id | replace: '-', '_' }}(unit) {
+    const tbody = document.getElementById('size-chart-body-{{ section.id }}');
+    if (!tbody) return;
+    
+    const rows = SIZE_DATA_{{ section.id | replace: '-', '_' }}[unit];
+    tbody.innerHTML = rows.map(row => `
+      <tr>
+        <td><strong>${escapeHtml(row.size)}</strong></td>
+        <td>${escapeHtml(row.chest)}</td>
+        <td>${escapeHtml(row.waist)}</td>
+        <td>${escapeHtml(row.hips)}</td>
+      </tr>
+    `).join('');
+  }
+
+  function escapeHtml(unsafe) {
+    if (!unsafe) return '';
+    return unsafe
+         .replace(/&/g, "&amp;")
+         .replace(/</g, "&lt;")
+         .replace(/>/g, "&gt;")
+         .replace(/"/g, "&quot;")
+         .replace(/'/g, "&#039;");
+  }
+
+  function switchSizeUnit{{ section.id | replace: '-', '_' }}(unit) {
+    document.getElementById('unit-inches-{{ section.id }}').classList.toggle('active', unit === 'inches');
+    document.getElementById('unit-cm-{{ section.id }}').classList.toggle('active', unit === 'cm');
+    renderSizeTable_{{ section.id | replace: '-', '_' }}(unit);
+  }
+
+  function openSizeGuideModal{{ section.id | replace: '-', '_' }}() {
+    const modal = document.getElementById('SizeGuideModal-{{ section.id }}');
+    if (modal) {
+      modal.removeAttribute('hidden');
+      // Trigger CSS transition
+      setTimeout(() => modal.classList.add('active'), 10);
+      renderSizeTable_{{ section.id | replace: '-', '_' }}('inches');
+      
+      // Accessibility - prevent body scroll and handle focus
+      document.body.style.overflow = 'hidden';
+      
+      // Escape key listener
+      document.addEventListener('keydown', handleEscapeKey_{{ section.id | replace: '-', '_' }});
+    }
+  }
+
+  function closeSizeGuideModal{{ section.id | replace: '-', '_' }}() {
+    const modal = document.getElementById('SizeGuideModal-{{ section.id }}');
+    if (modal) {
+      modal.classList.remove('active');
+      document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleEscapeKey_{{ section.id | replace: '-', '_' }});
+      
+      // Delay setting hidden to allow animation to complete
+      setTimeout(() => {
+        if (!modal.classList.contains('active')) {
+          modal.setAttribute('hidden', '');
+        }
+      }, 300);
+    }
+  }
+
+  function handleEscapeKey_{{ section.id | replace: '-', '_' }}(e) {
+    if (e.key === 'Escape') {
+      closeSizeGuideModal{{ section.id | replace: '-', '_' }}();
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product Size Guide",
+  "tag": "section",
+  "class": "shopify-section-size-guide",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Trigger Configuration"
+    },
+    {
+      "type": "text",
+      "id": "trigger_text",
+      "label": "Button/Link Label",
+      "default": "Size & Fit Guide"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "color",
+      "id": "trigger_color",
+      "label": "Link Text Color",
+      "default": "#121212"
+    },
+    {
+      "type": "color",
+      "id": "trigger_hover_color",
+      "label": "Link Hover Color",
+      "default": "#6366f1"
+    },
+    {
+      "type": "range",
+      "id": "trigger_font_size",
+      "min": 1.0,
+      "max": 2.0,
+      "step": 0.1,
+      "unit": "rem",
+      "label": "Font Size",
+      "default": 1.3
+    },
+    {
+      "type": "header",
+      "content": "Modal Settings"
+    },
+    {
+      "type": "text",
+      "id": "modal_title",
+      "label": "Modal Title",
+      "default": "Size & Fit Guide"
+    },
+    {
+      "type": "text",
+      "id": "modal_subtitle",
+      "label": "Modal Subtitle",
+      "default": "Find your exact measurements below."
+    },
+    {
+      "type": "text",
+      "id": "modal_footer_tip",
+      "label": "Modal Footer Tip",
+      "default": "Tip: If you are between sizes, we recommend sizing up for a relaxed fit."
+    },
+    {
+      "type": "range",
+      "id": "modal_width",
+      "min": 400,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "label": "Modal Maximum Width",
+      "default": 580
+    },
+    {
+      "type": "color",
+      "id": "modal_bg_color",
+      "label": "Modal Background Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "modal_text_color",
+      "label": "Modal Text Color",
+      "default": "#181817"
+    },
+    {
+      "type": "range",
+      "id": "backdrop_opacity",
+      "min": 0.1,
+      "max": 0.9,
+      "step": 0.05,
+      "label": "Backdrop Overlay Opacity",
+      "default": 0.8
+    },
+    {
+      "type": "range",
+      "id": "backdrop_blur",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "label": "Backdrop Blur strength",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "modal_border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Modal Border Radius",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Table Columns Headers"
+    },
+    {
+      "type": "text",
+      "id": "header_chest",
+      "label": "Chest Column Header",
+      "default": "Chest"
+    },
+    {
+      "type": "text",
+      "id": "header_waist",
+      "label": "Waist Column Header",
+      "default": "Waist"
+    },
+    {
+      "type": "text",
+      "id": "header_hips",
+      "label": "Hips Column Header",
+      "default": "Hips"
+    },
+    {
+      "type": "header",
+      "content": "Margins"
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 12
+    }
+  ],
+  "blocks": [
+    {
+      "type": "size_row",
+      "name": "Size Row",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Size Label (e.g. S, M, L)",
+          "default": "M"
+        },
+        {
+          "type": "header",
+          "content": "Inches"
+        },
+        {
+          "type": "text",
+          "id": "chest_in",
+          "label": "Chest (Inches)",
+          "default": "38-40\""
+        },
+        {
+          "type": "text",
+          "id": "waist_in",
+          "label": "Waist (Inches)",
+          "default": "32-34\""
+        },
+        {
+          "type": "text",
+          "id": "hips_in",
+          "label": "Hips (Inches)",
+          "default": "39-41\""
+        },
+        {
+          "type": "header",
+          "content": "Centimeters"
+        },
+        {
+          "type": "text",
+          "id": "chest_cm",
+          "label": "Chest (CM)",
+          "default": "96-101 cm"
+        },
+        {
+          "type": "text",
+          "id": "waist_cm",
+          "label": "Waist (CM)",
+          "default": "81-86 cm"
+        },
+        {
+          "type": "text",
+          "id": "hips_cm",
+          "label": "Hips (CM)",
+          "default": "99-104 cm"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Size Guide",
+      "blocks": [
+        {
+          "type": "size_row",
+          "settings": {
+            "title": "S",
+            "chest_in": "34-36\"",
+            "waist_in": "28-30\"",
+            "hips_in": "35-37\"",
+            "chest_cm": "86-91 cm",
+            "waist_cm": "71-76 cm",
+            "hips_cm": "89-94 cm"
+          }
+        },
+        {
+          "type": "size_row",
+          "settings": {
+            "title": "M",
+            "chest_in": "38-40\"",
+            "waist_in": "32-34\"",
+            "hips_in": "39-41\"",
+            "chest_cm": "96-101 cm",
+            "waist_cm": "81-86 cm",
+            "hips_cm": "99-104 cm"
+          }
+        },
+        {
+          "type": "size_row",
+          "settings": {
+            "title": "L",
+            "chest_in": "42-44\"",
+            "waist_in": "36-38\"",
+            "hips_in": "43-45\"",
+            "chest_cm": "106-111 cm",
+            "waist_cm": "91-96 cm",
+            "hips_cm": "109-114 cm"
+          }
+        },
+        {
+          "type": "size_row",
+          "settings": {
+            "title": "XL",
+            "chest_in": "46-48\"",
+            "waist_in": "40-42\"",
+            "hips_in": "47-49\"",
+            "chest_cm": "116-121 cm",
+            "waist_cm": "101-106 cm",
+            "hips_cm": "119-124 cm"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

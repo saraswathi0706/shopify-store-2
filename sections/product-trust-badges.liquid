@@ -1,0 +1,386 @@
+{%- comment -%}
+  Custom Section: Product Trust Badges
+  Theme Compatibility: Dawn & OS 2.0 Themes
+  Location: sections/product-trust-badges.liquid
+  
+  Adds fully configurable trust badges to the product page without using external apps.
+  Embeds lightweight SVG icons directly for fast page load speed.
+{%- endcomment -%}
+
+{%- style -%}
+  .product-trust-badges-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round }}px;
+    background-color: {{ section.settings.bg_color }};
+    color: {{ section.settings.text_color }};
+    border-radius: {{ section.settings.border_radius }}px;
+    {% if section.settings.show_border %}
+      border: 1px solid {{ section.settings.border_color }};
+    {% endif %}
+    margin: {{ section.settings.margin_top }}px 0 {{ section.settings.margin_bottom }}px 0;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-trust-badges-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .product-trust-badges-{{ section.id }} .badges-grid {
+    display: grid;
+    grid-template-columns: repeat({{ section.settings.columns_mobile }}, 1fr);
+    gap: 16px;
+    padding: 0 16px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-trust-badges-{{ section.id }} .badges-grid {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, 1fr);
+      gap: 24px;
+      padding: 0 24px;
+    }
+  }
+
+  .product-trust-badges-{{ section.id }} .badge-item {
+    display: flex;
+    flex-direction: {{ section.settings.layout_direction }};
+    align-items: center;
+    gap: 10px;
+    text-align: {% if section.settings.layout_direction == 'column' %}center{% else %}left{% endif %};
+  }
+
+  .product-trust-badges-{{ section.id }} .badge-icon-wrapper {
+    color: {{ section.settings.icon_color }};
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .product-trust-badges-{{ section.id }} .badge-icon-wrapper svg {
+    width: {{ section.settings.icon_size_mobile }}px;
+    height: {{ section.settings.icon_size_mobile }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .product-trust-badges-{{ section.id }} .badge-icon-wrapper svg {
+      width: {{ section.settings.icon_size_desktop }}px;
+      height: {{ section.settings.icon_size_desktop }}px;
+    }
+  }
+
+  .product-trust-badges-{{ section.id }} .badge-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .product-trust-badges-{{ section.id }} .badge-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .product-trust-badges-{{ section.id }} .badge-subtitle {
+    font-size: 1.1rem;
+    line-height: 1.3;
+    opacity: 0.75;
+    margin: 0;
+  }
+{%- endstyle -%}
+
+{%- if section.blocks.size > 0 -%}
+  <div class="product-trust-badges-{{ section.id }} {% if section.settings.custom_class != blank %}{{ section.settings.custom_class }}{% endif %}">
+    <div class="badges-grid">
+      {%- for block in section.blocks -%}
+        <div class="badge-item block-{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="badge-icon-wrapper">
+            {%- case block.settings.icon_type -%}
+              {%- when 'shield' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              {%- when 'truck' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              {%- when 'lock' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              {%- when 'refresh' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              {%- when 'award' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+              {%- when 'zap' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+              {%- when 'heart' -%}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+              {%- when 'custom_svg' -%}
+                {%- if block.settings.custom_svg != blank -%}
+                  {{ block.settings.custom_svg }}
+                {%- endif -%}
+              {%- when 'image' -%}
+                {%- if block.settings.custom_image != blank -%}
+                  <img src="{{ block.settings.custom_image | image_url: width: 100 }}" alt="{{ block.settings.title | escape }}" loading="lazy" style="object-fit: contain;">
+                {%- endif -%}
+            {%- endcase -%}
+          </div>
+          <div class="badge-text-wrapper">
+            {%- if block.settings.title != blank -%}
+              <span class="badge-title">{{ block.settings.title | escape }}</span>
+            {%- endif -%}
+            {%- if block.settings.subtitle != blank -%}
+              <span class="badge-subtitle">{{ block.settings.subtitle | escape }}</span>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Product Trust Badges",
+  "tag": "section",
+  "class": "shopify-section-trust-badges",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout Settings"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on Desktop",
+      "options": [
+        { "value": "1", "label": "1 Column" },
+        { "value": "2", "label": "2 Columns" },
+        { "value": "3", "label": "3 Columns" },
+        { "value": "4", "label": "4 Columns" },
+        { "value": "5", "label": "5 Columns" },
+        { "value": "6", "label": "6 Columns" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on Mobile",
+      "options": [
+        { "value": "1", "label": "1 Column" },
+        { "value": "2", "label": "2 Columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "layout_direction",
+      "label": "Badge Layout",
+      "options": [
+        { "value": "row", "label": "Icon Left, Text Right (Row)" },
+        { "value": "column", "label": "Icon Top, Text Center (Column)" }
+      ],
+      "default": "row"
+    },
+    {
+      "type": "header",
+      "content": "Styling & Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f9fafb"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#111827"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "Icon Color",
+      "default": "#6366f1"
+    },
+    {
+      "type": "range",
+      "id": "icon_size_desktop",
+      "min": 16,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Size (Desktop)",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "icon_size_mobile",
+      "min": 16,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "label": "Icon Size (Mobile)",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "label": "Border Radius",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_border",
+      "label": "Show Outer Border",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "Border Color",
+      "default": "#e5e7eb"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Padding Bottom",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "margin_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Top",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "margin_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Margin Bottom",
+      "default": 24
+    },
+    {
+      "type": "text",
+      "id": "custom_class",
+      "label": "Custom CSS Class"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Trust Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_type",
+          "label": "Icon",
+          "options": [
+            { "value": "shield", "label": "Shield (Guarantee)" },
+            { "value": "truck", "label": "Truck (Fast Shipping)" },
+            { "value": "lock", "label": "Lock (Secure)" },
+            { "value": "refresh", "label": "Refresh (Returns)" },
+            { "value": "award", "label": "Award (Quality)" },
+            { "value": "zap", "label": "Lightning (Speed)" },
+            { "value": "heart", "label": "Heart (Eco/Love)" },
+            { "value": "custom_svg", "label": "Custom SVG Code" },
+            { "value": "image", "label": "Custom Uploaded Image" }
+          ],
+          "default": "shield"
+        },
+        {
+          "type": "html",
+          "id": "custom_svg",
+          "label": "Custom SVG Code",
+          "info": "Paste SVG tag content here (e.g., <svg>...</svg>). Note: Set stroke/fill to 'currentColor' to align colors with settings."
+        },
+        {
+          "type": "image_picker",
+          "id": "custom_image",
+          "label": "Custom Uploaded Image",
+          "info": "Only used if 'Custom Uploaded Image' option is selected."
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Badge Title",
+          "default": "Secure Checkout"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Badge Subtitle",
+          "default": "256-Bit SSL Encrypted"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Trust Badges",
+      "blocks": [
+        {
+          "type": "badge",
+          "settings": {
+            "icon_type": "lock",
+            "title": "Secure Checkout",
+            "subtitle": "256-Bit SSL Encryption"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_type": "truck",
+            "title": "Fast Shipping",
+            "subtitle": "Dispatched in 24 Hours"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_type": "refresh",
+            "title": "30-Day Returns",
+            "subtitle": "Hassle-Free Policy"
+          }
+        },
+        {
+          "type": "badge",
+          "settings": {
+            "icon_type": "award",
+            "title": "Premium Quality",
+            "subtitle": "Guaranteed Satisfaction"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
